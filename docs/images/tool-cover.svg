@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 260" font-family="Segoe UI, Roboto, sans-serif">
+  <defs>
+    <linearGradient id="cov" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A1828"/>
+      <stop offset="0.55" stop-color="#11283A"/>
+      <stop offset="1" stop-color="#0A0B10"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#80D8FF"/>
+      <stop offset="1" stop-color="#1976D2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="260" fill="url(#cov)"/>
+  <rect x="0" y="0" width="6" height="260" fill="url(#bar)"/>
+
+  <!-- subtle grid -->
+  <g stroke="#1B2230" stroke-width="0.5" opacity="0.6">
+    <path d="M0 60 H1000 M0 120 H1000 M0 180 H1000 M0 240 H1000"/>
+    <path d="M120 0 V260 M240 0 V260 M360 0 V260 M480 0 V260 M600 0 V260 M720 0 V260 M840 0 V260 M960 0 V260"/>
+  </g>
+
+  <!-- Tag -->
+  <g transform="translate(40,40)">
+    <rect width="170" height="22" rx="11" fill="#11283A" stroke="#80D8FF"/>
+    <text x="85" y="15" fill="#80D8FF" font-size="11" font-weight="600" text-anchor="middle" letter-spacing="1.5">
+      TECHNICAL DOCUMENT
+    </text>
+  </g>
+
+  <text x="40" y="110" fill="#FFFFFF" font-size="34" font-weight="700">SOME/IP Diagnostics Suite</text>
+  <text x="40" y="146" fill="#80D8FF" font-size="20" font-weight="500">Tool Guide — capabilities, problem, solution &amp; outcomes</text>
+  <text x="40" y="180" fill="#9E9E9E" font-size="13">
+    Standalone automotive Ethernet diagnostics for SOME/IP-SD, DoIP and UDS — distributed as a single Windows executable.
+  </text>
+
+  <!-- Bottom strip -->
+  <g transform="translate(40,210)" font-size="11" fill="#9E9E9E">
+    <rect x="0" y="0" width="190" height="30" rx="4" fill="#1A1A1F" stroke="#2A2A33"/>
+    <text x="12" y="19">Binary: <tspan fill="#E6E6E6">SomeIPDiagnosticsSuite.exe</tspan></text>
+
+    <rect x="200" y="0" width="160" height="30" rx="4" fill="#1A1A1F" stroke="#2A2A33"/>
+    <text x="212" y="19">Audience: <tspan fill="#E6E6E6">Engineers / QA / CI</tspan></text>
+
+    <rect x="370" y="0" width="140" height="30" rx="4" fill="#1A1A1F" stroke="#2A2A33"/>
+    <text x="382" y="19">Version: <tspan fill="#E6E6E6">v2 (2026)</tspan></text>
+
+    <rect x="520" y="0" width="200" height="30" rx="4" fill="#1A1A1F" stroke="#2A2A33"/>
+    <text x="532" y="19">Standards: <tspan fill="#E6E6E6">AUTOSAR PRS R21-11, ISO 13400-2</tspan></text>
+  </g>
+
+  <!-- Decorative chip -->
+  <g transform="translate(820,60)" opacity="0.9">
+    <rect x="0" y="0" width="140" height="140" rx="14" fill="#0E1A24" stroke="#80D8FF" stroke-width="1.2"/>
+    <text x="70" y="34" fill="#80D8FF" font-size="11" text-anchor="middle" font-weight="600">SUITE</text>
+    <g transform="translate(20,46)" font-size="10" fill="#E6E6E6">
+      <rect width="100" height="18" rx="3" fill="#11283A"/>
+      <text x="50" y="13" text-anchor="middle">Capture</text>
+      <rect y="22" width="100" height="18" rx="3" fill="#11283A"/>
+      <text x="50" y="35" text-anchor="middle">SD Analyzer</text>
+      <rect y="44" width="100" height="18" rx="3" fill="#11283A"/>
+      <text x="50" y="57" text-anchor="middle">DoIP Analyzer</text>
+      <rect y="66" width="100" height="18" rx="3" fill="#11283A"/>
+      <text x="50" y="79" text-anchor="middle">Filter Engine</text>
+    </g>
+  </g>
+</svg>

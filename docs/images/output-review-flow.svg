@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 380" font-family="Segoe UI, Roboto, sans-serif">
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#11131A"/>
+      <stop offset="1" stop-color="#0A0B10"/>
+    </linearGradient>
+    <marker id="arr4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#FFD180"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="380" fill="url(#bg4)"/>
+  <text x="500" y="34" fill="#FFD180" font-size="20" font-weight="600" text-anchor="middle">
+    Test-data → Analyser → Output review workflow
+  </text>
+  <text x="500" y="54" fill="#9E9E9E" font-size="12" text-anchor="middle">
+    The five steps every new user performs to verify the suite end-to-end
+  </text>
+
+  <!-- Step boxes -->
+  <g font-size="12" fill="#E6E6E6">
+    <g transform="translate(40,100)">
+      <rect width="170" height="100" rx="10" fill="#1A1A1F" stroke="#FFD180"/>
+      <text x="85" y="22" fill="#FFD180" font-size="12" font-weight="700" text-anchor="middle">1. INPUT</text>
+      <text x="85" y="50" text-anchor="middle">large_realistic.pcap</text>
+      <text x="85" y="68" fill="#9E9E9E" text-anchor="middle">~13 000 frames</text>
+      <text x="85" y="84" fill="#9E9E9E" text-anchor="middle">deterministic</text>
+    </g>
+
+    <g transform="translate(240,100)">
+      <rect width="170" height="100" rx="10" fill="#11283A" stroke="#80D8FF"/>
+      <text x="85" y="22" fill="#80D8FF" font-size="12" font-weight="700" text-anchor="middle">2. ANALYSE</text>
+      <text x="85" y="50" text-anchor="middle">SomeIPDiagnosticsSuite</text>
+      <text x="85" y="68" fill="#9E9E9E" text-anchor="middle">analyze --report --json</text>
+      <text x="85" y="84" fill="#9E9E9E" text-anchor="middle">~200 ms</text>
+    </g>
+
+    <g transform="translate(440,100)">
+      <rect width="170" height="100" rx="10" fill="#1A1A1F" stroke="#80D8FF"/>
+      <text x="85" y="22" fill="#80D8FF" font-size="12" font-weight="700" text-anchor="middle">3. OUTPUTS</text>
+      <text x="85" y="46" text-anchor="middle">sample_report.html</text>
+      <text x="85" y="62" text-anchor="middle">sample_summary.json</text>
+      <text x="85" y="82" fill="#9E9E9E" text-anchor="middle">stdout KPIs</text>
+    </g>
+
+    <g transform="translate(640,100)">
+      <rect width="170" height="100" rx="10" fill="#1A1A1F" stroke="#A5D6A7"/>
+      <text x="85" y="22" fill="#A5D6A7" font-size="12" font-weight="700" text-anchor="middle">4. REVIEW</text>
+      <text x="85" y="48" text-anchor="middle">Compare KPIs</text>
+      <text x="85" y="64" text-anchor="middle">Inspect violations</text>
+      <text x="85" y="82" fill="#9E9E9E" text-anchor="middle">Cross-ref frames</text>
+    </g>
+
+    <g transform="translate(840,100)">
+      <rect width="120" height="100" rx="10" fill="#1A1A1F" stroke="#EF9A9A"/>
+      <text x="60" y="22" fill="#EF9A9A" font-size="12" font-weight="700" text-anchor="middle">5. ACT</text>
+      <text x="60" y="48" text-anchor="middle">Attach to PR</text>
+      <text x="60" y="64" text-anchor="middle">Fail the CI</text>
+      <text x="60" y="82" fill="#9E9E9E" text-anchor="middle">File a bug</text>
+    </g>
+  </g>
+
+  <!-- Arrows -->
+  <g stroke="#FFD180" stroke-width="1.6" fill="none">
+    <line x1="210" y1="150" x2="238" y2="150" marker-end="url(#arr4)"/>
+    <line x1="410" y1="150" x2="438" y2="150" marker-end="url(#arr4)"/>
+    <line x1="610" y1="150" x2="638" y2="150" marker-end="url(#arr4)"/>
+    <line x1="810" y1="150" x2="838" y2="150" marker-end="url(#arr4)"/>
+  </g>
+
+  <!-- Pass criteria callout -->
+  <g transform="translate(40,240)">
+    <rect width="920" height="110" rx="10" fill="#0E1A12" stroke="#A5D6A7"/>
+    <text x="20" y="26" fill="#A5D6A7" font-size="13" font-weight="700">PASS CRITERIA — what a healthy run prints</text>
+    <g font-family="Consolas, 'Courier New', monospace" font-size="12" fill="#E6E6E6">
+      <text x="20" y="52">analysed 12,575 messages from 12,894 frames in ~200 ms</text>
+      <text x="20" y="72">  SD:   ECUs=10  services=7  offers=1835  finds=2  violations=1</text>
+      <text x="20" y="92">  DoIP: sessions=6  reconnects=0  uds=3505  NRCs=254  retx=2  avg_rtt_ms=3.328</text>
+    </g>
+  </g>
+</svg>

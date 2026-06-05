@@ -133,6 +133,14 @@ MIT (recommended) — add a `LICENSE` file before shipping.
 If somebody else has just cloned this repo and wants a step-by-step
 walk-through (install → run → read the report), point them at:
 
+* **[`docs/TOOL_GUIDE.md`](docs/TOOL_GUIDE.md)** — professional,
+  illustrated tool guide that explains the **problem**, the
+  **solution**, the suite's **capabilities** and the **outcomes** you
+  can expect from `SomeIPDiagnosticsSuite.exe` (GUI + CLI + CI).
+* **[`docs/TEST_DATA_GUIDE.md`](docs/TEST_DATA_GUIDE.md)** — companion
+  handbook that walks through using the bundled test data
+  (`large_realistic.pcap`) and **reviewing the produced HTML / JSON
+  output** section by section.
 * **[`docs/USER_GUIDE.md`](docs/USER_GUIDE.md)** — full, illustrated
   user guide covering prerequisites, GUI tour, CLI usage, building
   the `.exe`, and troubleshooting.
