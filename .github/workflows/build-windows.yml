@@ -6,9 +6,14 @@ on:
     branches: [main, copilot/**]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write   # needed only to attach the .exe to a Release on tag push
     steps:
       - uses: actions/checkout@v4
 

@@ -925,17 +925,20 @@ class SomeIpSuiteApp:
         self.console.log(f"{ts}  {message}", level)
 
     def _on_close(self) -> None:
-        try:
-            if self.doip_tab._tester:
-                self.doip_tab._tester.stop()
-            if self.doip_tab._server:
-                self.doip_tab._server.stop()
-            if self.filter_tab._worker:
-                self.filter_tab._worker.stop()
-            if self.filter_tab._source:
-                self.filter_tab._source.stop()
-        except Exception:                       # noqa: BLE001
-            pass
+        for closer in (
+            getattr(self.doip_tab, "_tester", None),
+            getattr(self.doip_tab, "_server", None),
+            getattr(self.filter_tab, "_worker", None),
+            getattr(self.filter_tab, "_source", None),
+        ):
+            if closer is None:
+                continue
+            try:
+                closer.stop()
+            except (OSError, RuntimeError) as exc:
+                # Non-fatal during shutdown — log and move on.
+                self.log(f"shutdown: {closer.__class__.__name__}: {exc}",
+                         "WARN")
         self.root.destroy()
 
     def run(self) -> None:

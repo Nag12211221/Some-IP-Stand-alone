@@ -240,8 +240,10 @@ class DoipFlashTester(threading.Thread):
                 self.log(f"[tester] reconnecting and resuming at block {block_no}")
                 time.sleep(0.5)
             except Exception as exc:                # noqa: BLE001
+                # Final safety net so a logic bug in the tester never leaves
+                # the GUI hung waiting for ``finished``. Logged for diagnosis.
                 self.metrics.errors += 1
-                self.log(f"[tester] fatal: {exc}")
+                self.log(f"[tester] fatal ({type(exc).__name__}): {exc}")
                 break
         self.metrics.finished = True
 
