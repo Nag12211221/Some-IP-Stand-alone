@@ -11,6 +11,6 @@ only (no third-party runtime dependencies) so that PyInstaller can produce
 a single ``.exe`` with nothing for the end user to install.
 """
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __author__ = "SOME/IP Diagnostics Suite Contributors"
 __all__ = ["__version__", "__author__"]

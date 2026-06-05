@@ -1,38 +1,56 @@
-# SOME/IP Diagnostics Suite
+# SOME/IP Diagnostics Suite — v2
 
-A **standalone, professional desktop tool** that operationalises three solutions for
-common in-vehicle Ethernet pain points:
+A **standalone, professional desktop tool** for in-vehicle Ethernet diagnostics.
+v2 turns the previous simulator-only build into a **real diagnostics suite** that
+works on actual captures:
 
-| # | Problem | Module in the tool |
-|---|---------|--------------------|
-| 1 | SOME/IP service-discovery timing issues during ECU boot | **SD Timing** tab |
-| 2 | DoIP (Diagnostic-over-IP) connection instability during flashing | **DoIP Flashing** tab |
-| 3 | Real-time SOME/IP filter performance degrades above 100 k pps | **Filter Engine** tab |
+| Tab | What it does |
+|-----|--------------|
+| **Capture** | Open `.pcap` / `.pcapng` or capture live from a NIC (Npcap on Windows, AF_PACKET on Linux). Packet list with SOME/IP, SOME/IP-SD, DoIP decode and a detail pane. |
+| **SD Analyzer** | Offline SOME/IP-SD timing analyser — recovers per-ECU INITIAL_DELAY, REPETITIONS_BASE_DELAY and CYCLIC_OFFER_DELAY from the trace, flags AUTOSAR PRS SD R21-11 timing violations with the offending frame numbers. |
+| **DoIP Analyzer** | Offline DoIP session reconstructor — RoutingActivation outcomes, AliveCheck pairing, UDS exchange list with RTTs, NRCs, retransmits and reconnects. |
+| **Filter Engine** | Compiled O(1) hash-lookup pipeline; can be fed a capture, a live NIC or the legacy synthetic generator. |
+| **SD Demo / DoIP Demo** | The original deterministic simulators, kept behind a *Demo mode* for teaching / regression. |
 
-The application is delivered as a **single Windows `.exe`** — no Python install, no
-DLLs to copy, no pip dependencies for the end user. Just download and run.
+The application is still delivered as a **single Windows `.exe`** — no Python
+install, no DLLs to copy. New in v2: bundled icon, VS_VERSIONINFO, splash
+screen, ~30% smaller binary, plus a **CLI mode** so it can be run from CI:
+
+```text
+SomeIPDiagnosticsSuite.exe                                       # GUI
+SomeIPDiagnosticsSuite.exe info    capture.pcap                  # show summary
+SomeIPDiagnosticsSuite.exe analyze capture.pcap --report out.html
+                                          [--json out.json] [--strict]
+```
+
+`--strict` exits with code 2 if any SD violation is found — wire it up to your
+build pipeline.
+
+Keyboard: **Ctrl+O** open capture, **Ctrl+F** focus filter, **F5** re-analyse.
 
 ---
 
 ## Why it works (engineering rationale)
 
-* **SD Timing tab** runs a deterministic multi-ECU SOME/IP-SD state machine simulator
-  (NotReady → InitialWait → Repetition → Main, per AUTOSAR PRS SD R21-11). It gates
-  `OfferService` on application readiness, randomises `INITIAL_DELAY` per ECU,
-  applies exponential `REPETITIONS_BASE_DELAY` back-off, and reports any timing
-  violation that would have caused a boot-time race condition.
+* **SD Analyzer** consumes parsed `SdMessage` entries from the trace,
+  normalises t=0 to the first SD packet and groups OfferService /
+  FindService / SubscribeEventgroup per ECU. It then recovers
+  `INITIAL_DELAY`, `REPETITIONS_BASE_DELAY` and `CYCLIC_OFFER_DELAY`
+  from the actual inter-packet gaps and checks them against the AUTOSAR
+  PRS SD R21-11 expectations (initial delay window, exponential back-off
+  during repetition phase, cyclic-offer drift).
 
-* **DoIP Flashing tab** spins up a fully compliant **DoIP entity (server)** and a
-  **tester (client)** on the same machine. The transport layer enables
-  `TCP_NODELAY` + `SO_KEEPALIVE`, the entity answers `AliveCheck` requests from the
-  protocol layer (not the flash driver), and the tester implements
-  **routing-activation + resume-after-drop** logic per ISO 13400-2:2019. You can
-  inject a TCP drop or a 5-second stall and watch the session recover live.
+* **DoIP Analyzer** reassembles TCP per half-stream, locks onto port
+  13400 to determine the client/entity direction, and walks the
+  RoutingActivation → AliveCheck → DiagnosticMessage / Ack /
+  PositiveResponse / NegativeResponse state machine of ISO 13400-2:2019.
+  It surfaces NRCs, retransmits and any reconnect inside a logical
+  session.
 
-* **Filter Engine tab** runs a **compiled** filter pipeline — rules are flattened into
-  an O(1) hash-lookup table so per-packet cost stays sub-µs regardless of rule count.
-  A built-in synthetic generator pushes SOME/IP traffic at any target pps so you can
-  reproduce the >100 kpps regression and verify the fix.
+* **Filter Engine** runs the same compiled O(1) hash-lookup pipeline
+  as v1. It now ingests from: synthetic generator (regression), real
+  `.pcap`/`.pcapng` files via the same decoder used by the GUI, or live
+  NIC capture for in-the-loop testing.
 
 A full write-up of the rationale lives in the answer to the original problem
 statement; this repo is the runnable counterpart.
