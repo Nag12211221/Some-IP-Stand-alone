@@ -206,44 +206,56 @@ class SyntheticSource(PacketSource):
 
 
 class PcapSource(PacketSource):
-    """Reads a libpcap 2.4 file (no .pcapng support)."""
+    """Reads any pcap / pcap-ng file and yields **SOME/IP payloads only**.
 
-    PCAP_MAGIC_LE = 0xA1B2C3D4
-    PCAP_MAGIC_BE = 0xD4C3B2A1
+    Uses :mod:`someip_suite.protocols.pcap` + :mod:`.l2` so it decodes
+    Ethernet / VLAN / IPv4-6 / UDP / TCP correctly — including
+    pcap-ng (Wireshark's default save format) which the previous
+    bare-bones reader couldn't handle.
+    """
 
     def __init__(self, path: str) -> None:
         self.path = path
 
     def packets(self) -> Iterable[bytes]:
-        with open(self.path, "rb") as fh:
-            magic = fh.read(4)
-            if not magic:
-                return
-            (m,) = struct.unpack("<I", magic)
-            endian = "<"
-            if m == self.PCAP_MAGIC_BE:
-                endian = ">"
-            elif m != self.PCAP_MAGIC_LE:
-                raise ValueError("not a pcap file")
-            # skip the rest of the global header (20 bytes)
-            fh.read(20)
-            rec_fmt = endian + "IIII"
-            rec_size = struct.calcsize(rec_fmt)
-            while True:
-                hdr = fh.read(rec_size)
-                if len(hdr) < rec_size:
-                    return
-                _ts_s, _ts_us, incl_len, _orig_len = struct.unpack(rec_fmt, hdr)
-                data = fh.read(incl_len)
-                if len(data) < incl_len:
-                    return
-                # Try to skip Ethernet+IPv4+UDP headers (14+20+8) — if the
-                # caller fed us pre-extracted SOME/IP frames this still
-                # works because of the parser's defensive checks.
-                if len(data) > 42 and data[12:14] == b"\x08\x00":
-                    yield data[42:]
-                else:
-                    yield data
+        # Late imports to keep this module's own import cheap.
+        from ..protocols.pcap import read_pcap
+        from ..protocols.l2 import decode_frame
+        for frame in read_pcap(self.path):
+            pkt = decode_frame(frame)
+            if pkt is None or not pkt.payload:
+                continue
+            yield pkt.payload
+
+
+class LiveCaptureSource(PacketSource):
+    """Adapts a running :class:`someip_suite.modules.live_capture.LiveCapture`
+    instance into a :class:`PacketSource` yielding SOME/IP payloads.
+
+    The wrapper polls the capture's queue in a tight loop with a short
+    sleep when idle. ``stop()`` causes the iterator to exit.
+    """
+
+    def __init__(self, capture, idle_sleep: float = 0.005) -> None:
+        self._capture = capture
+        self._idle_sleep = idle_sleep
+        self._stop_event = threading.Event()
+
+    def stop(self) -> None:
+        self._stop_event.set()
+
+    def packets(self) -> Iterable[bytes]:
+        from ..protocols.l2 import decode_frame
+        while not self._stop_event.is_set():
+            batch = self._capture.drain()
+            if not batch:
+                time.sleep(self._idle_sleep)
+                continue
+            for frame in batch:
+                pkt = decode_frame(frame)
+                if pkt is None or not pkt.payload:
+                    continue
+                yield pkt.payload
 
 
 # ---------------------------------------------------------------------------

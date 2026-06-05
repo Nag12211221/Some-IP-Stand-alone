@@ -2,4 +2,4 @@
 their results into thread-safe queues consumed by the Tkinter UI.
 """
 
-from . import sd_analyzer, sd_offline, doip_monitor, doip_offline, filter_engine  # noqa: F401
+from . import sd_analyzer, sd_offline, doip_monitor, doip_offline, filter_engine, live_capture  # noqa: F401

@@ -42,6 +42,14 @@ OK = "#A5D6A7"
 
 
 def _apply_dark_theme(root: tk.Tk) -> None:
+    # Prefer sv-ttk if the user has it installed — a one-line modern
+    # flat dark theme. Fall back to our hand-rolled clam-derived theme
+    # otherwise, so the EXE keeps working without any third-party deps.
+    try:
+        import sv_ttk     # type: ignore
+        sv_ttk.set_theme("dark")
+    except Exception:     # noqa: BLE001
+        pass
     style = ttk.Style(root)
     try:
         style.theme_use("clam")
@@ -868,31 +876,96 @@ class SomeIpSuiteApp:
         bar = tk.Menu(self.root, tearoff=False, bg=PANEL, fg=FG,
                       activebackground=ACCENT, activeforeground="#0D1117")
         file_menu = tk.Menu(bar, tearoff=False, bg=PANEL, fg=FG)
+        file_menu.add_command(label="Open .pcap / .pcapng…   Ctrl+O",
+                              command=lambda: self.capture_tab._open_pcap())
+        file_menu.add_command(label="Save HTML report…",
+                              command=self._save_report)
+        file_menu.add_separator()
         file_menu.add_command(label="Clear log", command=lambda: self.console.clear())
         file_menu.add_separator()
-        file_menu.add_command(label="Exit", command=self._on_close)
+        file_menu.add_command(label="Exit   Alt+F4", command=self._on_close)
         bar.add_cascade(label="File", menu=file_menu)
+
+        view_menu = tk.Menu(bar, tearoff=False, bg=PANEL, fg=FG)
+        view_menu.add_command(label="Re-analyse current capture   F5",
+                              command=self._reanalyse)
+        bar.add_cascade(label="View", menu=view_menu)
 
         help_menu = tk.Menu(bar, tearoff=False, bg=PANEL, fg=FG)
         help_menu.add_command(label="About…", command=self._show_about)
         bar.add_cascade(label="Help", menu=help_menu)
         self.root.configure(menu=bar)
 
+        # Keyboard shortcuts
+        self.root.bind_all("<Control-o>", lambda _e: self.capture_tab._open_pcap())
+        self.root.bind_all("<Control-O>", lambda _e: self.capture_tab._open_pcap())
+        self.root.bind_all("<Control-f>", lambda _e: self._focus_filter())
+        self.root.bind_all("<Control-F>", lambda _e: self._focus_filter())
+        self.root.bind_all("<F5>", lambda _e: self._reanalyse())
+
+    def _focus_filter(self) -> None:
+        try:
+            self.capture_tab._filter_entry.focus_set()
+            self.notebook.select(self.capture_tab)
+        except Exception:
+            pass
+
+    def _reanalyse(self) -> None:
+        try:
+            self.sd_offline_tab._analyse()
+            self.doip_offline_tab._analyse()
+        except Exception as exc:    # noqa: BLE001
+            self.log(f"re-analyse failed: {exc}", "ERROR")
+
+    def _save_report(self) -> None:
+        from tkinter import filedialog
+        from .cli import render_html_report
+        if not self.store.messages:
+            messagebox.showinfo("No capture",
+                                "Open a .pcap first (Ctrl+O).",
+                                parent=self.root)
+            return
+        path = filedialog.asksaveasfilename(
+            parent=self.root, defaultextension=".html",
+            filetypes=[("HTML report", "*.html")],
+            title="Save HTML report as…")
+        if not path:
+            return
+        try:
+            render_html_report(self.store.source_label, self.store.messages,
+                               path)
+        except Exception as exc:    # noqa: BLE001
+            messagebox.showerror("Save failed", str(exc), parent=self.root)
+            return
+        self.log(f"[report] saved {path}", "OK")
+
     def _build_layout(self) -> None:
+        from .capture_tab import CaptureStore, CaptureTab, SdOfflineTab, DoipOfflineTab
+
+        self.store = CaptureStore()
+
         main = ttk.Frame(self.root)
         main.pack(fill="both", expand=True)
 
         nb = ttk.Notebook(main)
         nb.pack(fill="both", expand=True, padx=8, pady=(8, 0))
+        self.notebook = nb
 
         self.dashboard = DashboardTab(nb, self)
+        self.capture_tab = CaptureTab(nb, self)
+        self.sd_offline_tab = SdOfflineTab(nb, self)
+        self.doip_offline_tab = DoipOfflineTab(nb, self)
+        # Legacy / simulator tabs are still available behind a "Demo" label.
         self.sd_tab = SdTimingTab(nb, self)
         self.doip_tab = DoipFlashTab(nb, self)
         self.filter_tab = FilterEngineTab(nb, self)
-        nb.add(self.dashboard, text="  Dashboard  ")
-        nb.add(self.sd_tab,    text="  SD Timing  ")
-        nb.add(self.doip_tab,  text="  DoIP Flashing  ")
-        nb.add(self.filter_tab,text="  Filter Engine  ")
+        nb.add(self.dashboard,         text="  Dashboard  ")
+        nb.add(self.capture_tab,       text="  Capture  ")
+        nb.add(self.sd_offline_tab,    text="  SD Analyzer  ")
+        nb.add(self.doip_offline_tab,  text="  DoIP Analyzer  ")
+        nb.add(self.filter_tab,        text="  Filter Engine  ")
+        nb.add(self.sd_tab,            text="  SD Demo  ")
+        nb.add(self.doip_tab,          text="  DoIP Demo  ")
 
         # Log
         log_frame = ttk.LabelFrame(main, text=" Log ", padding=(8, 4))
@@ -905,7 +978,7 @@ class SomeIpSuiteApp:
         self.status.pack(fill="x")
         self.status.set("Ready")
         self.status.set_right(f"v{__version__}")
-        self.log("Suite started — choose a tab to begin.", "OK")
+        self.log("Suite started — File → Open .pcap (Ctrl+O) to begin.", "OK")
 
     def _show_about(self) -> None:
         messagebox.showinfo(
@@ -925,6 +998,12 @@ class SomeIpSuiteApp:
         self.console.log(f"{ts}  {message}", level)
 
     def _on_close(self) -> None:
+        # Stop the new live capture if it's running.
+        try:
+            if getattr(self.capture_tab, "_live", None) is not None:
+                self.capture_tab._stop_live()
+        except Exception:    # noqa: BLE001
+            pass
         for closer in (
             getattr(self.doip_tab, "_tester", None),
             getattr(self.doip_tab, "_server", None),
