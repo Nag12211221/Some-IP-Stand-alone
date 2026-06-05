@@ -1,0 +1,50 @@
+name: build-windows-exe
+
+on:
+  push:
+    tags: ["v*"]
+    branches: [main, copilot/**]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyInstaller (only build-time dependency)
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller==6.10.0
+
+      - name: Build single-file executable
+        run: |
+          pyinstaller build/someip_suite.spec --clean --noconfirm
+
+      - name: Smoke-test the EXE
+        shell: pwsh
+        run: |
+          Get-Item dist/SomeIPDiagnosticsSuite.exe
+          # Verify it actually launches headlessly for ~3 seconds, then kill it.
+          $p = Start-Process -FilePath dist/SomeIPDiagnosticsSuite.exe -PassThru
+          Start-Sleep -Seconds 3
+          if (-not $p.HasExited) { Stop-Process -Id $p.Id -Force }
+          Write-Host "Executable launches OK"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SomeIPDiagnosticsSuite-windows-x64
+          path: dist/SomeIPDiagnosticsSuite.exe
+          if-no-files-found: error
+
+      - name: Attach to release on tag push
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/SomeIPDiagnosticsSuite.exe
