@@ -133,6 +133,11 @@ MIT (recommended) — add a `LICENSE` file before shipping.
 If somebody else has just cloned this repo and wants a step-by-step
 walk-through (install → run → read the report), point them at:
 
+* **[`docs/SomeIP_Diagnostics_Suite.pptx`](docs/SomeIP_Diagnostics_Suite.pptx)** —
+  17-slide, 16:9 PowerPoint presentation (dark theme, illustrated)
+  covering problem → solution → capabilities → architecture → GUI/CLI
+  walkthrough → test data → outputs → CI → outcomes → roadmap. The
+  recommended "face of the project" deck for stakeholder reviews.
 * **[`docs/TOOL_GUIDE.md`](docs/TOOL_GUIDE.md)** — professional,
   illustrated tool guide that explains the **problem**, the
   **solution**, the suite's **capabilities** and the **outcomes** you
