@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="Segoe UI, Roboto, sans-serif">
+  <rect width="900" height="540" fill="#0E0E11"/>
+  <rect x="20" y="20" width="860" height="500" rx="6" fill="#15171E" stroke="#2A2A33"/>
+  <rect x="20" y="20" width="860" height="28" rx="6" fill="#1F2129"/>
+  <circle cx="38" cy="34" r="5" fill="#EF5350"/>
+  <circle cx="54" cy="34" r="5" fill="#FFCA28"/>
+  <circle cx="70" cy="34" r="5" fill="#66BB6A"/>
+  <text x="450" y="38" fill="#E6E6E6" font-size="12" text-anchor="middle">SOME/IP Diagnostics Suite — DoIP Analyzer</text>
+
+  <!-- Tabs -->
+  <g font-size="11">
+    <rect x="30" y="58" width="80" height="26" rx="4" fill="#2A2D38"/>
+    <text x="70" y="75" fill="#9E9E9E" text-anchor="middle">Dashboard</text>
+    <rect x="115" y="58" width="80" height="26" rx="4" fill="#2A2D38"/>
+    <text x="155" y="75" fill="#9E9E9E" text-anchor="middle">Capture</text>
+    <rect x="200" y="58" width="100" height="26" rx="4" fill="#2A2D38"/>
+    <text x="250" y="75" fill="#9E9E9E" text-anchor="middle">SD Analyzer</text>
+    <rect x="305" y="58" width="100" height="26" rx="4" fill="#11283A" stroke="#80D8FF"/>
+    <text x="355" y="75" fill="#80D8FF" text-anchor="middle">DoIP Analyzer</text>
+  </g>
+
+  <!-- KPI strip -->
+  <g transform="translate(30,100)" font-size="11">
+    <rect width="110" height="60" rx="6" fill="#1A1A1F" stroke="#333"/>
+    <text x="55" y="22" fill="#80D8FF" font-size="22" font-weight="600" text-anchor="middle">6</text>
+    <text x="55" y="48" fill="#9E9E9E" text-anchor="middle">Sessions</text>
+
+    <rect x="120" width="110" height="60" rx="6" fill="#1A1A1F" stroke="#333"/>
+    <text x="175" y="22" fill="#80D8FF" font-size="22" font-weight="600" text-anchor="middle">3,505</text>
+    <text x="175" y="48" fill="#9E9E9E" text-anchor="middle">UDS exchanges</text>
+
+    <rect x="240" width="110" height="60" rx="6" fill="#1A1A1F" stroke="#EF9A9A"/>
+    <text x="295" y="22" fill="#EF9A9A" font-size="22" font-weight="600" text-anchor="middle">254</text>
+    <text x="295" y="48" fill="#9E9E9E" text-anchor="middle">NRCs</text>
+
+    <rect x="360" width="110" height="60" rx="6" fill="#1A1A1F" stroke="#FFD54F"/>
+    <text x="415" y="22" fill="#FFD54F" font-size="22" font-weight="600" text-anchor="middle">2</text>
+    <text x="415" y="48" fill="#9E9E9E" text-anchor="middle">Retransmits</text>
+
+    <rect x="480" width="120" height="60" rx="6" fill="#1A1A1F" stroke="#333"/>
+    <text x="540" y="22" fill="#80D8FF" font-size="22" font-weight="600" text-anchor="middle">3.33</text>
+    <text x="540" y="48" fill="#9E9E9E" text-anchor="middle">Avg RTT (ms)</text>
+
+    <rect x="610" width="120" height="60" rx="6" fill="#1A1A1F" stroke="#333"/>
+    <text x="670" y="22" fill="#80D8FF" font-size="22" font-weight="600" text-anchor="middle">502</text>
+    <text x="670" y="48" fill="#9E9E9E" text-anchor="middle">Max RTT (ms)</text>
+  </g>
+
+  <!-- Session table -->
+  <text x="30" y="190" fill="#FFD180" font-size="13" font-weight="600">Sessions</text>
+  <g transform="translate(30,200)">
+    <rect width="840" height="160" fill="#0E0F15" stroke="#222"/>
+    <rect width="840" height="22" fill="#1A1A1F"/>
+    <g fill="#80D8FF" font-size="11" font-weight="600">
+      <text x="10"  y="15">Client</text>
+      <text x="200" y="15">Entity</text>
+      <text x="350" y="15">Start (s)</text>
+      <text x="440" y="15">RA code</text>
+      <text x="620" y="15">RA lat (ms)</text>
+      <text x="720" y="15">Alive a/s</text>
+      <text x="800" y="15">UDS msgs</text>
+    </g>
+    <g font-size="11" font-family="Consolas, monospace">
+      <text x="10"  y="38" fill="#E6E6E6">10.0.0.200:50000</text><text x="200" y="38" fill="#E6E6E6">10.0.0.10:13400</text><text x="350" y="38" fill="#E6E6E6">41.502</text><text x="440" y="38" fill="#A5D6A7">RoutingSuccessfullyActivated</text><text x="620" y="38" fill="#E6E6E6">2.00</text><text x="720" y="38" fill="#E6E6E6">0/0</text><text x="800" y="38" fill="#E6E6E6">500</text>
+      <text x="10"  y="58" fill="#E6E6E6">10.0.0.200:50001</text><text x="200" y="58" fill="#E6E6E6">10.0.0.11:13400</text><text x="350" y="58" fill="#E6E6E6">68.220</text><text x="440" y="58" fill="#A5D6A7">RoutingSuccessfullyActivated</text><text x="620" y="58" fill="#E6E6E6">2.00</text><text x="720" y="58" fill="#E6E6E6">0/0</text><text x="800" y="58" fill="#E6E6E6">3000</text>
+      <text x="10"  y="78" fill="#E6E6E6">10.0.0.200:50002</text><text x="200" y="78" fill="#E6E6E6">10.0.0.12:13400</text><text x="350" y="78" fill="#E6E6E6">122.110</text><text x="440" y="78" fill="#A5D6A7">RoutingSuccessfullyActivated</text><text x="620" y="78" fill="#E6E6E6">2.00</text><text x="720" y="78" fill="#E6E6E6">0/0</text><text x="800" y="78" fill="#E6E6E6">1</text>
+      <text x="10"  y="98" fill="#E6E6E6">10.0.0.200:50003</text><text x="200" y="98" fill="#E6E6E6">10.0.0.13:13400</text><text x="350" y="98" fill="#E6E6E6">123.115</text><text x="440" y="98" fill="#FFD54F">UnknownSourceAddress</text><text x="620" y="98" fill="#E6E6E6">2.00</text><text x="720" y="98" fill="#E6E6E6">0/0</text><text x="800" y="98" fill="#E6E6E6">0</text>
+      <text x="10"  y="118" fill="#E6E6E6">10.0.0.200:50004</text><text x="200" y="118" fill="#E6E6E6">10.0.0.13:13400</text><text x="350" y="118" fill="#E6E6E6">123.625</text><text x="440" y="118" fill="#A5D6A7">RoutingSuccessfullyActivated</text><text x="620" y="118" fill="#E6E6E6">2.00</text><text x="720" y="118" fill="#E6E6E6">0/0</text><text x="800" y="118" fill="#E6E6E6">1</text>
+      <text x="10"  y="138" fill="#E6E6E6">10.0.0.200:50005</text><text x="200" y="138" fill="#E6E6E6">10.0.0.14:13400</text><text x="350" y="138" fill="#E6E6E6">124.130</text><text x="440" y="138" fill="#A5D6A7">RoutingSuccessfullyActivated</text><text x="620" y="138" fill="#E6E6E6">2.00</text><text x="720" y="138" fill="#E6E6E6">0/0</text><text x="800" y="138" fill="#E6E6E6">1</text>
+    </g>
+  </g>
+
+  <!-- Session detail -->
+  <text x="30" y="385" fill="#FFD180" font-size="13" font-weight="600">Session #2 — 10.0.0.200:50001 → 10.0.0.11:13400 (first 6 UDS)</text>
+  <g transform="translate(30,395)">
+    <rect width="840" height="110" fill="#0E0F15" stroke="#222"/>
+    <rect width="840" height="22" fill="#1A1A1F"/>
+    <g fill="#80D8FF" font-size="11" font-weight="600">
+      <text x="10"  y="15">Frame</text>
+      <text x="80"  y="15">SID</text>
+      <text x="150" y="15">RTT (ms)</text>
+      <text x="240" y="15">Ack</text>
+      <text x="300" y="15">NRC</text>
+      <text x="380" y="15">Request</text>
+      <text x="600" y="15">Response</text>
+    </g>
+    <g font-size="11" font-family="Consolas, monospace">
+      <text x="10"  y="38" fill="#E6E6E6">2210</text><text x="80" y="38" fill="#E6E6E6">0x22</text><text x="150" y="38" fill="#E6E6E6">18.0</text><text x="240" y="38" fill="#E6E6E6">✓</text><text x="300" y="38" fill="#E6E6E6">—</text><text x="380" y="38" fill="#E6E6E6">22 00 00</text><text x="600" y="38" fill="#E6E6E6">62 00 00 56 56 56…</text>
+      <text x="10"  y="55" fill="#E6E6E6">2213</text><text x="80" y="55" fill="#E6E6E6">0x22</text><text x="150" y="55" fill="#E6E6E6">18.0</text><text x="240" y="55" fill="#E6E6E6">✓</text><text x="300" y="55" fill="#E6E6E6">—</text><text x="380" y="55" fill="#E6E6E6">22 00 01</text><text x="600" y="55" fill="#E6E6E6">62 00 01 56 56 56…</text>
+      <text x="10"  y="72" fill="#EF9A9A">2216</text><text x="80" y="72" fill="#EF9A9A">0x22</text><text x="150" y="72" fill="#EF9A9A">18.0</text><text x="240" y="72" fill="#EF9A9A">✓</text><text x="300" y="72" fill="#EF9A9A">0x31</text><text x="380" y="72" fill="#EF9A9A">22 00 02</text><text x="600" y="72" fill="#EF9A9A">7F 22 31</text>
+      <text x="10"  y="89" fill="#E6E6E6">2219</text><text x="80" y="89" fill="#E6E6E6">0x22</text><text x="150" y="89" fill="#E6E6E6">18.0</text><text x="240" y="89" fill="#E6E6E6">✓</text><text x="300" y="89" fill="#E6E6E6">—</text><text x="380" y="89" fill="#E6E6E6">22 00 03</text><text x="600" y="89" fill="#E6E6E6">62 00 03 56 56 56…</text>
+    </g>
+  </g>
+</svg>

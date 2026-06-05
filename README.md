@@ -125,3 +125,30 @@ tests/
 ## License
 
 MIT (recommended) — add a `LICENSE` file before shipping.
+
+---
+
+## Documentation & test data for new users
+
+If somebody else has just cloned this repo and wants a step-by-step
+walk-through (install → run → read the report), point them at:
+
+* **[`docs/USER_GUIDE.md`](docs/USER_GUIDE.md)** — full, illustrated
+  user guide covering prerequisites, GUI tour, CLI usage, building
+  the `.exe`, and troubleshooting.
+* **[`testdata/`](testdata/)** — a ready-to-use, ≈ 13 000-frame
+  realistic capture (`large_realistic.pcap`) containing multi-ECU
+  SOME/IP-SD timing, a deliberate timing violation, and five DoIP
+  tester sessions (tester-present loop, bulk DID read with NRCs,
+  response-pending, reconnect, application-level retransmit). A
+  pre-generated `sample_report.html` and `sample_summary.json` show
+  exactly what the tool should produce on a healthy run.
+
+Reproduce the bundled sample report in one command:
+
+```bash
+PYTHONPATH=src python -m someip_suite analyze \
+    testdata/large_realistic.pcap \
+    --report testdata/sample_report.html \
+    --json   testdata/sample_summary.json
+```

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="Segoe UI, Roboto, sans-serif">
+  <rect width="900" height="540" fill="#0E0E11"/>
+  <!-- Window chrome -->
+  <rect x="20" y="20" width="860" height="500" rx="6" fill="#15171E" stroke="#2A2A33"/>
+  <rect x="20" y="20" width="860" height="28" rx="6" fill="#1F2129"/>
+  <circle cx="38" cy="34" r="5" fill="#EF5350"/>
+  <circle cx="54" cy="34" r="5" fill="#FFCA28"/>
+  <circle cx="70" cy="34" r="5" fill="#66BB6A"/>
+  <text x="450" y="38" fill="#E6E6E6" font-size="12" text-anchor="middle">SOME/IP Diagnostics Suite v2</text>
+
+  <!-- Menu bar -->
+  <rect x="20" y="48" width="860" height="22" fill="#1A1C24"/>
+  <text x="40" y="63" fill="#E6E6E6" font-size="11">File</text>
+  <text x="80" y="63" fill="#E6E6E6" font-size="11">View</text>
+  <text x="125" y="63" fill="#E6E6E6" font-size="11">Help</text>
+
+  <!-- Tabs -->
+  <g font-size="11">
+    <rect x="30" y="76" width="80" height="26" rx="4" fill="#2A2D38"/>
+    <text x="70" y="93" fill="#9E9E9E" text-anchor="middle">Dashboard</text>
+    <rect x="115" y="76" width="80" height="26" rx="4" fill="#11283A" stroke="#80D8FF"/>
+    <text x="155" y="93" fill="#80D8FF" text-anchor="middle">Capture</text>
+    <rect x="200" y="76" width="100" height="26" rx="4" fill="#2A2D38"/>
+    <text x="250" y="93" fill="#9E9E9E" text-anchor="middle">SD Analyzer</text>
+    <rect x="305" y="76" width="100" height="26" rx="4" fill="#2A2D38"/>
+    <text x="355" y="93" fill="#9E9E9E" text-anchor="middle">DoIP Analyzer</text>
+    <rect x="410" y="76" width="100" height="26" rx="4" fill="#2A2D38"/>
+    <text x="460" y="93" fill="#9E9E9E" text-anchor="middle">Filter Engine</text>
+    <rect x="515" y="76" width="80" height="26" rx="4" fill="#2A2D38"/>
+    <text x="555" y="93" fill="#9E9E9E" text-anchor="middle">SD Demo</text>
+    <rect x="600" y="76" width="80" height="26" rx="4" fill="#2A2D38"/>
+    <text x="640" y="93" fill="#9E9E9E" text-anchor="middle">DoIP Demo</text>
+  </g>
+
+  <!-- Toolbar -->
+  <g transform="translate(30,115)" font-size="11">
+    <rect width="160" height="28" rx="4" fill="#11283A" stroke="#80D8FF"/>
+    <text x="80" y="18" fill="#80D8FF" text-anchor="middle">📂  Open .pcap…  Ctrl+O</text>
+    <rect x="170" width="120" height="28" rx="4" fill="#1A1A1F" stroke="#444"/>
+    <text x="230" y="18" fill="#E6E6E6" text-anchor="middle">▶ Start live capture</text>
+    <rect x="300" width="100" height="28" rx="4" fill="#1A1A1F" stroke="#444"/>
+    <text x="350" y="18" fill="#E6E6E6" text-anchor="middle">⏹ Stop</text>
+    <rect x="410" width="160" height="28" rx="4" fill="#1A1A1F" stroke="#444"/>
+    <text x="490" y="18" fill="#E6E6E6" text-anchor="middle">Filter:  someip-sd</text>
+  </g>
+
+  <!-- Packet table -->
+  <g transform="translate(30,160)">
+    <rect width="540" height="290" fill="#0E0F15" stroke="#222"/>
+    <rect width="540" height="22" fill="#1A1A1F"/>
+    <g fill="#80D8FF" font-size="11" font-weight="600">
+      <text x="10" y="15">#</text>
+      <text x="60" y="15">Time</text>
+      <text x="130" y="15">Src</text>
+      <text x="230" y="15">Dst</text>
+      <text x="330" y="15">Proto</text>
+      <text x="400" y="15">Info</text>
+    </g>
+    <g font-size="11" fill="#E6E6E6">
+      <text x="10" y="38">1</text><text x="60" y="38">0.050</text><text x="130" y="38">10.0.0.10</text><text x="230" y="38">224.224.224.245</text><text x="330" y="38" fill="#FFD54F">SOME/IP-SD</text><text x="400" y="38">OfferService 0x1001.1 (TTL=3)</text>
+      <text x="10" y="58">2</text><text x="60" y="58">0.080</text><text x="130" y="58">10.0.0.11</text><text x="230" y="58">224.224.224.245</text><text x="330" y="58" fill="#FFD54F">SOME/IP-SD</text><text x="400" y="58">OfferService 0x1002.1 (TTL=3)</text>
+      <text x="10" y="78">3</text><text x="60" y="78">0.075</text><text x="130" y="78">10.0.0.50</text><text x="230" y="78">224.224.224.245</text><text x="330" y="78" fill="#FFD54F">SOME/IP-SD</text><text x="400" y="78">FindService 0x1001.1</text>
+      <text x="10" y="98">…</text>
+      <text x="10" y="118">33</text><text x="60" y="118">0.650</text><text x="130" y="118" fill="#EF9A9A">10.0.0.99</text><text x="230" y="118">224.224.224.245</text><text x="330" y="118" fill="#EF9A9A">SOME/IP-SD</text><text x="400" y="118" fill="#EF9A9A">OfferService 0x9999.1  ⚠ no back-off</text>
+      <text x="10" y="138">…</text>
+      <text x="10" y="158">2204</text><text x="60" y="158">42.155</text><text x="130" y="158">10.0.0.200</text><text x="230" y="158">10.0.0.10</text><text x="330" y="158" fill="#A5D6A7">DoIP</text><text x="400" y="158">RoutingActivationRequest SA=0x0E00</text>
+      <text x="10" y="178">2205</text><text x="60" y="178">42.157</text><text x="130" y="178">10.0.0.10</text><text x="230" y="178">10.0.0.200</text><text x="330" y="178" fill="#A5D6A7">DoIP</text><text x="400" y="178">RoutingActivationResponse SUCCESS</text>
+      <text x="10" y="198">2206</text><text x="60" y="198">42.162</text><text x="130" y="198">10.0.0.200</text><text x="230" y="198">10.0.0.10</text><text x="330" y="198" fill="#A5D6A7">DoIP</text><text x="400" y="198">DiagMsg 0x3E 00  (TesterPresent)</text>
+      <text x="10" y="218">2207</text><text x="60" y="218">42.165</text><text x="130" y="218">10.0.0.10</text><text x="230" y="218">10.0.0.200</text><text x="330" y="218" fill="#A5D6A7">DoIP</text><text x="400" y="218">DiagMsgAck</text>
+      <text x="10" y="238">2208</text><text x="60" y="238">42.215</text><text x="130" y="238">10.0.0.10</text><text x="230" y="238">10.0.0.200</text><text x="330" y="238" fill="#A5D6A7">DoIP</text><text x="400" y="238">DiagMsg 0x7E 00  (positive)</text>
+      <text x="10" y="258">…</text>
+      <text x="10" y="278">5102</text><text x="60" y="278">120.001</text><text x="130" y="278">10.0.0.11</text><text x="230" y="278">10.0.0.200</text><text x="330" y="278" fill="#EF9A9A">DoIP</text><text x="400" y="278" fill="#EF9A9A">NRC 0x31 (requestOutOfRange)</text>
+    </g>
+  </g>
+
+  <!-- Detail pane -->
+  <g transform="translate(585,160)">
+    <rect width="285" height="290" fill="#0E0F15" stroke="#222"/>
+    <rect width="285" height="22" fill="#1A1A1F"/>
+    <text x="10" y="15" fill="#80D8FF" font-size="11" font-weight="600">Packet detail — frame #33</text>
+    <g font-size="10" fill="#E6E6E6" font-family="Consolas, monospace">
+      <text x="10" y="40">Ethernet II  src=02:00:00:00:00:99</text>
+      <text x="10" y="55">             dst=02:00:00:00:00:FF</text>
+      <text x="10" y="75">IPv4         10.0.0.99 → 224.224.224.245</text>
+      <text x="10" y="95">UDP          30490 → 30490  len=52</text>
+      <text x="10" y="115" fill="#FFD54F">SOME/IP-SD  service=0xFFFF method=0x8100</text>
+      <text x="10" y="130">  Length=44  Client=0x0000  Session=2</text>
+      <text x="10" y="145">  ProtV=1 IfV=1 MsgType=NOTIFICATION</text>
+      <text x="10" y="165" fill="#FFD54F">  Entry: OfferService</text>
+      <text x="10" y="180">    service_id  = 0x9999</text>
+      <text x="10" y="195">    instance_id = 1</text>
+      <text x="10" y="210">    major=1 minor=0 TTL=3</text>
+      <text x="10" y="230" fill="#FFD54F">  Option: IPv4 endpoint</text>
+      <text x="10" y="245">    10.0.0.99 : 30599 / UDP</text>
+      <text x="10" y="275" fill="#EF9A9A">⚠ flagged by SD Analyzer:</text>
+      <text x="10" y="288">  missing-exponential-backoff</text>
+    </g>
+  </g>
+
+  <!-- Status bar -->
+  <rect x="20" y="470" width="860" height="40" fill="#1A1C24"/>
+  <text x="35" y="492" fill="#A5D6A7" font-size="11">● Capture loaded: large_realistic.pcap   12,894 frames   12,575 decoded</text>
+  <text x="600" y="492" fill="#80D8FF" font-size="11">SOME/IP-SD 1,839   DoIP 10,736   other 0</text>
+</svg>

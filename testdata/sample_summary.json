@@ -1,0 +1,34 @@
+{
+  "file": "testdata/large_realistic.pcap",
+  "frames": 12894,
+  "messages": 12575,
+  "sd": {
+    "ecus": 10,
+    "services": 7,
+    "offers": 1835,
+    "finds": 2,
+    "subscribes": 2,
+    "violations": 1,
+    "first_offer_ms": 0.0
+  },
+  "sd_violations": [
+    {
+      "src_ip": "10.0.0.99",
+      "service_id": 39321,
+      "instance_id": 1,
+      "kind": "missing-exponential-backoff",
+      "detail": "repetition gap #2 = 200.0 ms did not double the previous 200.0 ms \u2014 back-off broken",
+      "frame_index": 33,
+      "ts": 0.6499999999999999
+    }
+  ],
+  "doip": {
+    "sessions": 6,
+    "reconnects": 0,
+    "uds_exchanges": 3505,
+    "negative_responses": 254,
+    "retransmits": 2,
+    "avg_rtt_ms": 3.328,
+    "max_rtt_ms": 502.0
+  }
+}
